@@ -1,37 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Parsing.c                                          :+:      :+:    :+:   */
+/*   create_philo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/14 05:58:19 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/07/18 02:43:45 by eagoumi          ###   ########.fr       */
+/*   Created: 2023/07/17 21:37:59 by eagoumi           #+#    #+#             */
+/*   Updated: 2023/07/17 22:40:24 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
 // #include <libc.h>
-// #include <ctype.h>
 
-void	parsing(int ac, char **av)
+void *actions (void *arg)
 {
-	int	i;
-	int	j;
+	sleep(1);
+	puts("threads");
+	return NULL;
+}
 
-	i = 1;
-	while (av[i])
-	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (!isdigit(av[i][j]))
-			{
-				puts("error");
-				exit(1);
-			}
-			j++;
-		}
-		i++;
-	}
+void	create_philo(void)
+{
+	t_philo	mythread;
+	t_philo	mythread1;
+
+	pthread_create(&mythread.thread, NULL, actions, NULL);
+	pthread_create(&mythread1.thread, NULL, actions, NULL);
+	// pthread_create(&mythread5.thread, NULL, actions, NULL);
+	// pthread_create(&mythread6.thread, NULL, actions, NULL);
+	pthread_join(mythread.thread, NULL);
+
+}
+
+int main(void)
+{
+	create_philo();
 }
