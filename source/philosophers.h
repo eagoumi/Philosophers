@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 10:42:03 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/07/18 02:42:12 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/07/21 02:53:21 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ typedef struct philoinfo_s
 typedef struct philo_s
 {
 	pthread_t		thread;
+	pthread_mutex_t	*fork_left;
+	pthread_mutex_t	*fork_right;
+	int				philo_id;
+	int				eaten_time;
+	t_info			*args;
 	
 }	t_philo;
 

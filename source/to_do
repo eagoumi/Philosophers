@@ -53,4 +53,5 @@ typedef struct all                                   |
 
 if time_eat < time_slp
 
-	time_eat + time_slp + e*/
+	time_eat + time_slp + e
+*/
