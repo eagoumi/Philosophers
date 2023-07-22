@@ -39,10 +39,10 @@ typedef struct all                                   |
 
 //./philo <philo_nb> <time_die> <time_eat> <time_slp> [ <must_eat> ]
 /*./philo 4 410 200 200
-        +-|---|---|-- philo_nb
-          +---|---|-- time_die
-              +---|-- time_eat
-                  +-- time_slp*/
+          +-|---|---|-- philo_nb
+            +---|---|-- time_die
+                +---|-- time_eat
+                    +-- time_slp*/
 //**************** Minimum time_die for EVEN philo_nb ****************
 //	2 x time_eat + e
 
