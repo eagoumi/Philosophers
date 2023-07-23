@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 10:42:03 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/07/22 05:05:30 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/07/23 06:04:26 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define PHILOSOPHERS_H
 
 # include <libc.h>
-#include <pthread.h>
+# include <pthread.h>
+# include <sys/time.h>
 
 typedef struct philoinfo_s
 {
@@ -29,8 +30,8 @@ typedef struct philoinfo_s
 typedef struct philo_s
 {
 	pthread_t		thread;
-	pthread_mutex_t	*fork_left;
-	pthread_mutex_t	*fork_right;
+	pthread_mutex_t	fork_left;
+	pthread_mutex_t	fork_right;
 	int				philo_id;
 	int				eaten_time;
 	t_info			*args;
