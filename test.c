@@ -3,98 +3,104 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#define NUM_PHILOSOPHERS 5
-#define TIME_TO_DIE 3000
-#define TIME_TO_EAT 2000
-#define TIME_TO_SLEEP 1000
-#define NUM_TIMES_TO_EAT 3
-
-typedef enum { THINKING, HUNGRY, EATING, SLEEPING, DEAD } PhilosopherState;
-
 typedef struct {
-	PhilosopherState state;
-	int timesEaten;
-	pthread_mutex_t mutex;
-	pthread_cond_t cond;
-} Philosopher;
+    int philosopher_id;
+    pthread_t thread; // pthread_t variable to store the thread ID
+    pthread_mutex_t* left_fork;
+    pthread_mutex_t* right_fork;
+    int times_eaten;
+    int time_to_die;
+    int time_to_eat;
+    int time_to_sleep;
+    int num_times_to_eat;
+} PhilosopherData;
 
-Philosopher philosophers[NUM_PHILOSOPHERS];
-pthread_mutex_t forks[NUM_PHILOSOPHERS];
-
-void grab_forks(int philosopher_id) {
-	pthread_mutex_lock(&forks[philosopher_id]);
-	pthread_mutex_lock(&forks[(philosopher_id + 1) % NUM_PHILOSOPHERS]);
+void grab_forks(PhilosopherData* philosopher) {
+    pthread_mutex_lock(philosopher->left_fork);
+    pthread_mutex_lock(philosopher->right_fork);
 }
 
-void release_forks(int philosopher_id) {
-	pthread_mutex_unlock(&forks[philosopher_id]);
-	pthread_mutex_unlock(&forks[(philosopher_id + 1) % NUM_PHILOSOPHERS]);
+void release_forks(PhilosopherData* philosopher) {
+    pthread_mutex_unlock(philosopher->left_fork);
+    pthread_mutex_unlock(philosopher->right_fork);
 }
 
 void* philosopher_thread(void* arg) {
-	int philosopher_id = *(int*)arg;
-	Philosopher* philosopher = &philosophers[philosopher_id];
+    PhilosopherData* data = (PhilosopherData*)arg;
 
-	while (1) {
-		printf("Philosopher %d is thinking\n", philosopher_id);
+    while (data->times_eaten < data->num_times_to_eat) {
+        printf("Philosopher %d is thinking\n", data->philosopher_id);
 
-		philosopher->state = THINKING;
-		usleep(rand() % TIME_TO_DIE);
+        usleep(data->time_to_die * 1000000);
 
-		philosopher->state = HUNGRY;
-		grab_forks(philosopher_id);
+        grab_forks(data);
 
-		philosopher->state = EATING;
-		philosopher->timesEaten++;
-		printf("Philosopher %d is eating (%d times)\n", philosopher_id, philosopher->timesEaten);
-		usleep(rand() % TIME_TO_EAT);
+        printf("Philosopher %d is eating (%d times)\n", data->philosopher_id, data->times_eaten + 1);
+        usleep(data->time_to_eat * 1000000);
 
-		release_forks(philosopher_id);
-		philosopher->state = SLEEPING;
+        release_forks(data);
 
-		printf("Philosopher %d is sleeping\n", philosopher_id);
-		usleep(rand() % TIME_TO_SLEEP);
+        printf("Philosopher %d is sleeping\n", data->philosopher_id);
+        usleep(data->time_to_sleep * 1000000);
 
-		if (philosopher->timesEaten == NUM_TIMES_TO_EAT) {
-			philosopher->state = DEAD;
-			printf("Philosopher %d has finished eating and died\n", philosopher_id);
-			break;
-		}
-	}
+        data->times_eaten++;
+    }
 
-	return NULL;
+    printf("Philosopher %d has finished eating and is done\n", data->philosopher_id);
+    return NULL;
 }
 
 int main() {
-	pthread_t threads[NUM_PHILOSOPHERS];
-	int philosopher_ids[NUM_PHILOSOPHERS];
+    int NUM_PHILOSOPHERS;
+    int NUM_TIMES_TO_EAT;
 
-	// Initialize philosophers and forks
-	for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
-		philosophers[i].state = THINKING;
-		philosophers[i].timesEaten = 0;
-		pthread_mutex_init(&philosophers[i].mutex, NULL);
-		pthread_cond_init(&philosophers[i].cond, NULL);
-		pthread_mutex_init(&forks[i], NULL);
-	}
+    printf("Enter the number of philosophers: ");
+    scanf("%d", &NUM_PHILOSOPHERS);
 
-	// Create philosopher threads
-	for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
-		philosopher_ids[i] = i;
-		pthread_create(&threads[i], NULL, philosopher_thread, &philosopher_ids[i]);
-	}
+    printf("Enter the number of times each philosopher must eat: ");
+    scanf("%d", &NUM_TIMES_TO_EAT);
 
-	// Wait for philosopher threads to finish
-	for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
-		pthread_join(threads[i], NULL);
-	}
+    pthread_mutex_t forks[NUM_PHILOSOPHERS];
+    PhilosopherData philosopher_data[NUM_PHILOSOPHERS];
 
-	// Clean up resources
-	for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
-		pthread_mutex_destroy(&philosophers[i].mutex);
-		pthread_cond_destroy(&philosophers[i].cond);
-		pthread_mutex_destroy(&forks[i]);
-	}
+    // Initialize forks
+    for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
+        pthread_mutex_init(&forks[i], NULL);
+    }
 
-	return 0;
+    // Set default values for time_to_die, time_to_eat, and time_to_sleep
+    int time_to_die = 3;
+    int time_to_eat = 2;
+    int time_to_sleep = 1;
+
+    // Ask the user for custom time values if provided
+    printf("Enter custom values for time_to_die, time_to_eat, and time_to_sleep (in seconds):\n");
+    scanf("%d %d %d", &time_to_die, &time_to_eat, &time_to_sleep);
+
+    // Create philosopher threads
+    for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
+        philosopher_data[i].philosopher_id = i;
+        philosopher_data[i].left_fork = &forks[i];
+        philosopher_data[i].right_fork = &forks[(i + 1) % NUM_PHILOSOPHERS];
+        philosopher_data[i].times_eaten = 0;
+        philosopher_data[i].time_to_die = time_to_die;
+        philosopher_data[i].time_to_eat = time_to_eat;
+        philosopher_data[i].time_to_sleep = time_to_sleep;
+        philosopher_data[i].num_times_to_eat = NUM_TIMES_TO_EAT;
+
+        // Create the thread and store its ID in the philosopher_data struct
+        pthread_create(&philosopher_data[i].thread, NULL, philosopher_thread, &philosopher_data[i]);
+    }
+
+    // Wait for philosopher threads to finish
+    for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
+        pthread_join(philosopher_data[i].thread, NULL);
+    }
+
+    // Clean up resources
+    for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
+        pthread_mutex_destroy(&forks[i]);
+    }
+
+    return 0;
 }

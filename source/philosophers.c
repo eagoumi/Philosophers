@@ -24,8 +24,6 @@ void	release_forks(t_philo *philo)
 	pthread_mutex_unlock(&philo->fork_right);
 }
 
-
-
 long    current_time(void)
 {
     struct timeval gettime;
@@ -53,15 +51,38 @@ void    mine_sleep(long time)
     }
 }
 
-
-void    check_if_dead()
+int if_dead(t_philo *philo)
 {
+    long    time;
 
+    time = current_time() - philo->time_to_eat;
+    if (time > philo->time_to_die)
+    {
+        pthread_mutex_lock();
+
+    }
+
+    
+}
+
+int check_if_dead(t_alldata *info)
+{
+    while (1)
+    {
+        while ()
+        {
+
+        }
+    }
+// loop 1
+    // loop on every philo : 
+        // last time a philo eaten - time now > time to die then 1 down
+        // if nb time eat for all philo >= nb time to eat 
 }
 
 
 void    routine_philos(void *arg);
-void *philosophers_threads(void *arg) 
+void *philosophers_threads(void *arg)
 {
     t_philo *data = (t_philo *)arg;
 
@@ -108,6 +129,8 @@ int main(int ac, char **av) {
     if (ac == 6)
         get_data.number_ropas = atoi(av[5]);
 
+    /*We have for exemple 1 2 3 4 5 6 7 8 9 10 Philosophers*/
+    /*1 while create 1 3 5 7 9 => create one and skip other one */
     i = 0;
     while (i < number_philos) 
     {
@@ -118,6 +141,7 @@ int main(int ac, char **av) {
     }
     mine_sleep(get_data.time_to_eat/2);
     i = 1;
+    /*1 while create 2 4 6 8 10 => create skipped one and skip last one created */
     while (i < number_philos)
     {
         data[i].philo_id = i;
@@ -132,6 +156,10 @@ int main(int ac, char **av) {
     {
         pthread_join(threads[i], NULL);
         i++;
+    }
+    while (1)
+    {
+        //check death
     }
 
     /* Don't forget to free allocated memory before exiting */

@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 10:42:03 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/07/23 06:04:26 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/07/24 08:09:14 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,22 @@ typedef struct philoinfo_s
 
 typedef struct philo_s
 {
+	int				philo_id;
+	int				eaten_time;
+	long			last_meal;
 	pthread_t		thread;
 	pthread_mutex_t	fork_left;
 	pthread_mutex_t	fork_right;
-	int				philo_id;
-	int				eaten_time;
 	t_info			*args;
 	
 }	t_philo;
+
+typedef struct alldata_s
+{
+	t_philo	*philo;
+	t_info	*info;
+
+}	t_alldata;
 
 void	parsing(int ac, char **av);
 
