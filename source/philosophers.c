@@ -123,10 +123,11 @@ void *philosophers_threads(void *arg)
     return NULL;
 }
 
-int main(int ac, char **av) {
+int main(int ac, char **av) 
+{
     t_info get_data;
     t_philo *data;
-    pthread_t *threads;
+    t_alldata *threads;
     int number_philos;
     int i;
 
@@ -136,7 +137,7 @@ int main(int ac, char **av) {
     number_philos = atoi(av[1]);
     // Allocate memory for data and threads arrays
     data = (t_philo *)malloc(sizeof(t_philo) * number_philos);
-    threads = (pthread_t *)malloc(sizeof(pthread_t) * number_philos);
+    threads = (t_alldata *)malloc(sizeof(t_alldata) * number_philos);
 
     // Initialize data[i].args members
     get_data.number_philos = atoi(av[1]);
@@ -153,7 +154,7 @@ int main(int ac, char **av) {
     {
         data[i].philo_id = i;
         data[i].args = &get_data; // Set the pointer to the shared t_info struct
-        pthread_create(&threads[i], NULL, philosophers_threads, &data[i]);
+        pthread_create(&threads->philo->threads[i], NULL, philosophers_threads, &data[i]);
         i += 2;
     }
     mine_sleep(get_data.time_to_eat/2);
@@ -163,7 +164,7 @@ int main(int ac, char **av) {
     {
         data[i].philo_id = i;
         data[i].args = &get_data; // Set the pointer to the shared t_info struct
-        pthread_create(&threads[i], NULL, philosophers_threads, &data[i]);
+        pthread_create(&threads->philo->threads[i], NULL, philosophers_threads, &data[i]);
         i += 2;
     }
 
@@ -171,13 +172,11 @@ int main(int ac, char **av) {
     /* Wait for all threads to finish before exiting */
     while (i < number_philos) 
     {
-        pthread_join(threads[i], NULL);
+        pthread_join(threads->philo->threads[i], NULL);
         i++;
     }
-    while (1)
-    {
-        //check death
-    }
+    if (check_if_dead(threads->philo->threads))
+        return (0);
 
     /* Don't forget to free allocated memory before exiting */
     free(data);

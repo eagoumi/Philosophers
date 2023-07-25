@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 10:42:03 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/07/25 05:06:19 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/07/25 06:18:56 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ typedef struct philo_s
 	int				eaten_time;
 	int				are_dead;
 	long			dernier_repas;
-	pthread_t		thread;
+    pthread_t		*threads;
 	pthread_mutex_t	fork_left;
 	pthread_mutex_t	fork_right;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	*output;
+	pthread_mutex_t	output;
 	t_info			*args;
 	
 }	t_philo;
