@@ -54,30 +54,47 @@ void    mine_sleep(long time)
 int if_dead(t_philo *philo)
 {
     long    time;
+    long    get_time;
 
-    time = current_time() - philo->time_to_eat;
-    if (time > philo->time_to_die)
+    time = current_time() - philo->dernier_repas;
+    if (time > philo->args->time_to_die)
     {
-        pthread_mutex_lock();
-
+        pthread_mutex_lock(&philo->output);
+        get_time = (current_time() - philo->args->time_start);
+        printf("Philosopher %d is dead at\t %ld", philo->philo_id, get_time);
+        philo->are_dead = 1;
+        return (1);
     }
-
-    
+    return (0);
 }
 
-int check_if_dead(t_alldata *info)
+int check_if_dead(t_alldata *allinfo)
 {
-    while (1)
-    {
-        while ()
-        {
-
-        }
-    }
+// to do
 // loop 1
     // loop on every philo : 
         // last time a philo eaten - time now > time to die then 1 down
         // if nb time eat for all philo >= nb time to eat 
+    int i;
+    int count_nb_of_meals;
+    while (1)
+    {
+        i = 0;
+        count_nb_of_meals = 0;
+        while (i < allinfo->info->number_philos)
+        {
+            if (if_dead(&allinfo->philo[i]) == 1)
+                return (1);
+            count_nb_of_meals += allinfo->philo[i].eaten_time;
+            i++;
+            if (count_nb_of_meals == 0)
+            {
+                pthread_mutex_lock(&allinfo->philo->output);
+                return (1);
+            }
+        }
+    }
+    return (0);
 }
 
 
