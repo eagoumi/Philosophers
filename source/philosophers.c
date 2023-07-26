@@ -12,9 +12,13 @@
 
 #include "philosophers.h"
 
-void	grab_fork(t_philo *philos)
+void	grab_fork_left(t_philo *philos)
 {
 	pthread_mutex_lock(&philos->fork_left);
+}
+
+void	grab_fork_right(t_philo *philos)
+{
 	pthread_mutex_lock(&philos->fork_right);
 }
 
@@ -98,90 +102,152 @@ int check_if_dead(t_alldata *allinfo)
 }
 
 
-void    routine_philos(void *arg);
-void *philosophers_threads(void *arg)
+void    routine_philos(t_philo *data)
 {
-    t_philo *data = (t_philo *)arg;
+    grab_fork_right(data);
+    printf("Philosopher %d has taken the RIGHT FORK\n", data->philo_id);
+    grab_fork_left(data);
+    printf("Philosopher %d has taken the LEFT FORK\n", data->philo_id);
+    printf("Philosopher %d is EATING\n", data->philo_id);
+    data->dernier_repas = current_time();
+    mine_sleep(data->args->time_to_eat);
+    release_forks(data);
+    data->eaten_time--;
+    printf("Philosopher %d is SLEEPING\n", data->philo_id);
+    mine_sleep(data->args->time_to_sleep);
+    printf("philosopher %d is THINKING\n", data->philo_id);
 
+}
+
+void    *routine_philo_2(void *args)
+{
+    t_philo *data = (t_philo *)args;
+    data->dernier_repas = current_time();
     while (1)
-	{
-        printf("Philosopher %d is thinking \n", data->philo_id);
-        mine_sleep(100);
-		
-		grab_fork(data);
-		
-        printf("Philosopher %d is eating\n", data->philo_id);
-        //if
-        mine_sleep(100);
-
-		release_forks(data);
-		
-        printf("Philosopher %d is Sleeping\n", data->philo_id);
-        mine_sleep(100);
+    {
+        if(data->eaten_time != 0)
+            routine_philos(data);
+        else
+            break ;
     }
-    printf("Philosopher %d has finished eating\n", data->philo_id);
     return NULL;
+}
+//to_do
+/*    
+void    *routine(void *data)
+{
+    t_philo    *philo;
+
+    philo = (t_philo *)data;
+    philo->last_meal = current_time();
+    while (1)
+    {
+        if (philo->eat_count != 0)
+            routine_2(philo);
+        else
+            break ;
+    }
+    return (NULL);
+}
+*/
+
+// void *philosophers_threads(void *arg)
+// {
+//     t_philo *data = (t_philo *)arg;
+
+//     while (1)
+// 	{
+//         printf("Philosopher %d is thinking \n", data->philo_id);
+//         mine_sleep(100);
+		
+// 		grab_fork(data);
+
+//         if ()
+//             exit(1);
+		
+//         printf("Philosopher %d is eating\n", data->philo_id);
+//         //if
+//         mine_sleep(100);
+
+// 		release_forks(data);
+		
+//         printf("Philosopher %d is Sleeping\n", data->philo_id);
+//         mine_sleep(100);
+//     }
+//     printf("Philosopher %d has finished eating\n", data->philo_id);
+//     return NULL;
+// }
+
+void    main_init(int ac, char **av, t_info *get_data)
+{
+    // Initialize data[i].args members
+    get_data->number_philos = atoi(av[1]);
+    get_data->time_to_die = atoi(av[2]);
+    get_data->time_to_eat = atoi(av[3]);
+    get_data->time_to_sleep = atoi(av[4]);
+    if (ac == 6)
+        get_data->number_ropas = atoi(av[5]);
+
+}
+
+void    init_philo(int number_philos, t_info *get_data, t_alldata *threads, t_philo *data)
+{
+    int i;
+    int j;
+
+    j = 0;
+    //info->philo[i].eat_count = info->data->nb_of_meals;
+    while (j < 2)
+    {
+        i = j;
+        while (i < number_philos) 
+        {
+            data[i].philo_id = i;
+            data[i].eaten_time = data->args->number_ropas;
+            data[i].args = get_data; // Set the pointer to the shared t_info struct
+            pthread_create(&threads->philo->threads[i], NULL, routine_philo_2, &data[i]);
+            //to_do Protection of pthread_create if the return are not 0
+            i += 2;
+        }
+        if (j == 0)
+            mine_sleep(get_data->time_to_eat/2);
+        j++;
+    }
+    i = 0;
+    /* Wait for all threads to finish before exiting */
+    while (i < number_philos) 
+    {
+        pthread_join(threads->philo->threads[i], NULL);
+        // if (check_if_dead(threads->philo->threads[i]))
+        //     exit(1);
+        i++;
+    }
 }
 
 int main(int ac, char **av) 
 {
     t_info get_data;
     t_philo *data;
-    t_alldata *threads;
+    t_alldata threads;
     int number_philos;
     int i;
 
+    // parsing(ac, av);
+    // exit(1);
     if (ac < 5 || ac > 6)
         return 0;
-
     number_philos = atoi(av[1]);
     // Allocate memory for data and threads arrays
     data = (t_philo *)malloc(sizeof(t_philo) * number_philos);
-    threads = (t_alldata *)malloc(sizeof(t_alldata) * number_philos);
-
-    // Initialize data[i].args members
-    get_data.number_philos = atoi(av[1]);
-    get_data.time_to_die = atoi(av[2]);
-    get_data.time_to_eat = atoi(av[3]);
-    get_data.time_to_sleep = atoi(av[4]);
-    if (ac == 6)
-        get_data.number_ropas = atoi(av[5]);
-
+    // threads = (t_alldata *)malloc(sizeof(t_alldata) * number_philos);
+    main_init( ac, av,&get_data);
     /*We have for exemple 1 2 3 4 5 6 7 8 9 10 Philosophers*/
     /*1 while create 1 3 5 7 9 => create one and skip other one */
-    i = 0;
-    while (i < number_philos) 
-    {
-        data[i].philo_id = i;
-        data[i].args = &get_data; // Set the pointer to the shared t_info struct
-        pthread_create(&threads->philo->threads[i], NULL, philosophers_threads, &data[i]);
-        i += 2;
-    }
-    mine_sleep(get_data.time_to_eat/2);
-    i = 1;
-    /*1 while create 2 4 6 8 10 => create skipped one and skip last one created */
-    while (i < number_philos)
-    {
-        data[i].philo_id = i;
-        data[i].args = &get_data; // Set the pointer to the shared t_info struct
-        pthread_create(&threads->philo->threads[i], NULL, philosophers_threads, &data[i]);
-        i += 2;
-    }
-
-    i = 0;
-    /* Wait for all threads to finish before exiting */
-    while (i < number_philos) 
-    {
-        pthread_join(threads->philo->threads[i], NULL);
-        i++;
-    }
-    if (check_if_dead(threads->philo->threads))
-        return (0);
-
+    init_philo( number_philos, &get_data, &threads, data);
+    // printf("sssssss");
     /* Don't forget to free allocated memory before exiting */
     free(data);
-    free(threads);
-
+    // free(threads.philo->threads);
     return 0;
 }
 

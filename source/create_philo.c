@@ -6,11 +6,11 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 21:37:59 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/07/17 22:40:24 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/07/25 09:25:00 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+// #include "philosophers.h"
 
 // #include <libc.h>
 
