@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 10:42:03 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/07/25 06:18:56 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/08/07 05:58:46 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 # define PHILOSOPHERS_H
 
 # include <libc.h>
+#include <ctype.h>
 # include <pthread.h>
 # include <sys/time.h>
 
 typedef struct mtxx_s
 {
 	pthread_mutex_t	*forks;
-
 }	t_mtx;
 
 typedef struct philoinfo_s
@@ -42,10 +42,9 @@ typedef struct philo_s
 	int				are_dead;
 	long			dernier_repas;
 	t_mtx			*mtx;
-    pthread_t		*threads;
-	pthread_mutex_t	fork_left;
-	pthread_mutex_t	fork_right;
-	pthread_mutex_t	*forks;
+    pthread_t		threads;
+	pthread_mutex_t	*fork_left;
+	pthread_mutex_t	*fork_right;
 	pthread_mutex_t	output;
 	t_info			*args;
 	

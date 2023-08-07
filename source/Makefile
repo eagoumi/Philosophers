@@ -94,6 +94,7 @@
 NAME = philo
 INC = philosophers.h
 FLAGS = -Wall -Wextra -Werror
+
 SRC = 	check_if_dead.c \
 		create_philo.c \
 		grab_release_forks.c \

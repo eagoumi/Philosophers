@@ -5,7 +5,7 @@ int create_philo(t_alldata *get_philo, int j, int i)
 {
     if (get_philo->philo[i].philo_id % 2 == j)
     {
-        if (pthread_create(get_philo->philo[i].threads, NULL, &routine_philo_main, &get_philo->philo[i]) != 0)
+        if (pthread_create(&get_philo->philo[i].threads, NULL, &routine_philo_main, &get_philo->philo[i]) != 0)
         {
             // destroy_mutex(get_philo);
             free(get_philo->key_to);
@@ -31,7 +31,7 @@ int final_philo(t_alldata *get_philo)
     i = -1;
     while (++i < get_philo->info->number_philos)
     {
-        if (pthread_join(&get_philo->philo[i].threads, NULL) != 0)
+        if (pthread_join(get_philo->philo[i].threads, NULL) != 0)
         {
             /*handle if join return error*/
             printf("Error joining thread\n");
