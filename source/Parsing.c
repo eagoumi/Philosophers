@@ -11,10 +11,8 @@
 /* ************************************************************************** */
 
 #include "philosophers.h"
-// #include <libc.h>
-// #include <ctype.h>
 
-void	parsing(int ac, char **av)
+int	parsing(int ac, char **av)
 {
 	int	i;
 	int	j;
@@ -27,11 +25,12 @@ void	parsing(int ac, char **av)
 		{
 			if (!isdigit(av[i][j]))
 			{
-				puts("error");
-				exit(1);
+				puts("Parsing error");
+				return (1);
 			}
 			j++;
 		}
 		i++;
 	}
+	return (0);
 }

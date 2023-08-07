@@ -1,40 +1,44 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   create_philo.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/17 21:37:59 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/07/25 09:25:00 by eagoumi          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "philosophers.h"
 
-// #include "philosophers.h"
 
-// #include <libc.h>
-
-void *actions (void *arg)
+int create_philo(t_alldata *get_philo, int j, int i)
 {
-	sleep(1);
-	puts("threads");
-	return NULL;
+    if (get_philo->philo[i].philo_id % 2 == j)
+    {
+        if (pthread_create(get_philo->philo[i].threads, NULL, &routine_philo_main, &get_philo->philo[i]) != 0)
+        {
+            // destroy_mutex(get_philo);
+            free(get_philo->key_to);
+            free(get_philo->key_to->forks);
+            return (1);
+        }
+    }
+    usleep(30);
+    return (0);
 }
 
-void	create_philo(void)
+int final_philo(t_alldata *get_philo)
 {
-	t_philo	mythread;
-	t_philo	mythread1;
+    int i;
 
-	pthread_create(&mythread.thread, NULL, actions, NULL);
-	pthread_create(&mythread1.thread, NULL, actions, NULL);
-	// pthread_create(&mythread5.thread, NULL, actions, NULL);
-	// pthread_create(&mythread6.thread, NULL, actions, NULL);
-	pthread_join(mythread.thread, NULL);
-
-}
-
-int main(void)
-{
-	create_philo();
+    i = -1;
+    get_philo->info->time_start = current_time();
+    while (++i < get_philo->info->number_philos)
+        create_philo(get_philo, 0, i);
+    i = -1;
+    while (++i < get_philo->info->number_philos)
+        create_philo(get_philo, 1, i);
+    i = -1;
+    while (++i < get_philo->info->number_philos)
+    {
+        if (pthread_join(&get_philo->philo[i].threads, NULL) != 0)
+        {
+            /*handle if join return error*/
+            printf("Error joining thread\n");
+            return (1);
+        }
+    }
+    if (check_if_dead(get_philo))
+        return (0);
+    return (0);
 }
