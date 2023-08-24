@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 05:58:19 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/08/24 18:39:43 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/08/24 22:58:38 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	parsing(char **av)
 		j = 0;
 		if (!(av[i][0]))
 		{
-			puts("Parsing error");
+			printf("Parsing_Bonus ERROR");
 			return (1);
 		}
 		while (av[i][j])
 		{
 			if (!ft_isdigit(av[i][j]))
 			{
-				puts("Parsing error");
+				printf("Parsing_Bonus ERROR");
 				return (1);
 			}
 			j++;

@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 16:09:17 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/08/24 20:39:39 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/08/24 22:57:03 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int ac, char **av)
 	get_data.info = &data;
 	if (ac < 5 || ac > 6)
 	{
-		printf("Error //!\\\\ Too few ARGUMENTS in Philo\n");
+		printf("Error //!\\\\ Too few ARGUMENTS in PHILO\n");
 		return (0);
 	}
 	if (parsing(av))
