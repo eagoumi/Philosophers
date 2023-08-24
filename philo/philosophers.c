@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers_bonus.c                               :+:      :+:    :+:   */
+/*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/24 15:52:00 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/08/24 17:46:20 by eagoumi          ###   ########.fr       */
+/*   Created: 2023/08/24 16:09:17 by eagoumi           #+#    #+#             */
+/*   Updated: 2023/08/24 18:40:34 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers_bonus.h"
+#include "philosophers.h"
 
 int	ft_atoi(const char *str)
 {
@@ -39,29 +39,31 @@ int	ft_atoi(const char *str)
 	return (signe * x);
 }
 
-int	main(int argc, char **argv)
+int	main(int ac, char **av)
 {
 	t_alldata	get_data;
 	t_info		data;
 
 	get_data.info = &data;
-	if (argc < 5 || argc > 6)
-		return (1);
-	if (parsing(argv))
+	if (ac < 5 || ac > 6)
+	{
+		printf("Error //!\\\\ Too few ARGUMENTS in Philo\n");
 		return (0);
-	get_data.info->number_philos = ft_atoi(argv[1]);
-	get_data.info->time_to_die = ft_atoi(argv[2]);
-	get_data.info->time_to_eat = ft_atoi(argv[3]);
-	get_data.info->time_to_sleep = ft_atoi(argv[4]);
+	}
+	if (parsing(av))
+		return (0);
+	get_data.info->number_philos = ft_atoi(av[1]);
+	get_data.info->time_to_die = ft_atoi(av[2]);
+	get_data.info->time_to_eat = ft_atoi(av[3]);
+	get_data.info->time_to_sleep = ft_atoi(av[4]);
 	get_data.info->number_ropas = -1;
 	get_data.info->is_dead = 0;
-	if (argc == 6)
-		get_data.info->number_ropas = ft_atoi(argv[5]);
-	if (initial_semaphore(&get_data))
+	if (ac == 6)
+		get_data.info->number_ropas = ft_atoi(av[5]);
+	if (initial_mtx(&get_data))
 		return (0);
 	if (initial_philo(&get_data))
 		return (0);
-	if (initial_pross(&get_data))
+	if (final_philo(&get_data))
 		return (0);
-	my_free_sem(&get_data);
 }

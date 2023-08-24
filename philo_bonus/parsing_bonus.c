@@ -1,33 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initial_mutex.c                                    :+:      :+:    :+:   */
+/*   parsing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/24 15:58:15 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/08/24 16:00:05 by eagoumi          ###   ########.fr       */
+/*   Created: 2023/07/14 05:58:19 by eagoumi           #+#    #+#             */
+/*   Updated: 2023/08/24 18:39:43 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philosophers_bonus.h"
 
-int	initial_mtx(t_alldata *get_info)
+int	ft_isdigit(int st)
+{
+	return (st >= '0' && st <= '9');
+}
+
+int	parsing(char **av)
 {
 	int	i;
+	int	j;
 
-	i = 0;
-	get_info->key_to = (t_mtx *)malloc(sizeof(t_mtx));
-	if (!get_info->key_to)
-		return (1);
-	get_info->key_to->forks = (pthread_mutex_t *)malloc(
-			sizeof(pthread_mutex_t) * get_info->info->number_philos);
-	if (!get_info->key_to->forks)
-		return (1);
-	while (i < get_info->info->number_philos)
+	i = 1;
+	while (av[i])
 	{
-		if (pthread_mutex_init(&get_info->key_to->forks[i], NULL) != 0)
+		j = 0;
+		if (!(av[i][0]))
+		{
+			puts("Parsing error");
 			return (1);
+		}
+		while (av[i][j])
+		{
+			if (!ft_isdigit(av[i][j]))
+			{
+				puts("Parsing error");
+				return (1);
+			}
+			j++;
+		}
 		i++;
 	}
 	return (0);

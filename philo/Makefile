@@ -93,7 +93,7 @@
 
 NAME = philo
 INC = philosophers.h
-FLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = 	check_if_dead.c \
 		create_philo.c \
@@ -109,7 +109,7 @@ OBJ = $(SRC:%.c=%.o)
 
 all: $(NAME)
 $(NAME) : $(OBJ) $(INC)
-	gcc -pthread $(FLAGS) $(OBJ) -o $(NAME)
+	cc -pthread $(OBJ) -o $(NAME)
 clean:
 	@rm -f $(OBJ)
 fclean: clean
