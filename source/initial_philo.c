@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 21:37:59 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/08/07 04:42:10 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/08/24 15:58:49 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	initial_philo(t_alldata *get_info)
 	int	i;
 
 	i = 0;
-	get_info->philo = (t_philo *)malloc(sizeof(t_philo) * get_info->info->number_philos);
+	get_info->philo = (t_philo *)malloc(sizeof(t_philo) * 
+			get_info->info->number_philos);
 	if (!get_info->philo)
 		return (1);
 	while (i < get_info->info->number_philos)
