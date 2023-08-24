@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 15:51:32 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/08/24 15:51:47 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/08/24 20:45:56 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	wait_for_loop(t_alldata *alldata)
 int	initial_pross(t_alldata *alldata)
 {
 	int	i;
-	int	j;
-	int	stat;
 
 	i = 0;
 	while (i < alldata->info->number_philos)

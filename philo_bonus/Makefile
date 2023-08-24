@@ -1,24 +1,90 @@
-#for test only
+BONUS=philo_bonus
+CFLAGS= -Wall -Wextra -Werror
+INCLUDE_BNS=./philosophers_bonus.h
+PATH_OBJ_BNS=./philo_bonus_object/
+
+# fonction philosophers & Supplementaire 
+
+FILES_BNS=	check_death.c \
+			initial_sems_bonus.c \
+			sleep_currtime_bonus.c \
+			routine_bonus.c \
+			philosophers_bonus.c \
+			philo_utils.c \
+			parsing_bonus.c 
+
+OBJ_BNS=$(addprefix $(PATH_OBJ_BNS), $(FILES_BNS:.c=.o))
+FILES_BNS_WITH_PATH=$(addprefix , $(FILES_BNS))
+
+DEF 	= 	\x1B[1;0m
+RED 	= 	\x1B[1;31m
+PURPLE 	=	\x1B[1;34m
+BLUE 	= 	\x1B[1;96m
+GREEN 	= 	\x1B[1;32m
+SILVER 	= 	\x1B[1;90m
+YELLOW 	= 	\x1B[1;33m
+WHITE	= 	\x1b[37m
+
+all: $(BONUS)
+
+$(BONUS):$(OBJ_BNS) $(INCLUDE_BNS)
+	@cc $(FILES_BNS_WITH_PATH) -o $(BONUS)
+	
+	@printf "$(GREEN)\t ─────────────────$(RED)────────────────$(GREEN)────────────────$(RED)────────────────$(GREEN)────────────────$(RED)────────────────────────$(GREEN)───────────\n"
+	@printf "$(GREEN)\t ─██████████████──$(RED)██████████████──$(GREEN)██████████████──$(RED)██████████████──$(GREEN)██████──██████──$(RED)██████──────────██████──$(GREEN)██████████─\n"
+	@printf "$(GREEN)\t ─██░░░░░░░░░░██──$(RED)██░░░░░░░░░░██──$(GREEN)██░░░░░░░░░░██──$(RED)██░░░░░░░░░░██──$(GREEN)██░░██──██░░██──$(RED)██░░██████████████░░██──$(GREEN)██░░░░░░██─\n"
+	@printf "$(GREEN)\t ─██░░██████████──$(RED)██░░██████░░██──$(GREEN)██░░██████████──$(RED)██░░██████░░██──$(GREEN)██░░██──██░░██──$(RED)██░░░░░░░░░░░░░░░░░░██──$(GREEN)████░░████─\n"
+	@printf "$(GREEN)\t ─██░░██──────────$(RED)██░░██──██░░██──$(GREEN)██░░██──────────$(RED)██░░██──██░░██──$(GREEN)██░░██──██░░██──$(RED)██░░██████░░██████░░██──$(GREEN)──██░░██───\n"
+	@printf "$(GREEN)\t ─██░░██████████──$(RED)██░░██████░░██──$(GREEN)██░░██──────────$(RED)██░░██──██░░██──$(GREEN)██░░██──██░░██──$(RED)██░░██──██░░██──██░░██──$(GREEN)──██░░██───\n"
+	@printf "$(GREEN)\t ─██░░░░░░░░░░██──$(RED)██░░░░░░░░░░██──$(GREEN)██░░██──██████──$(RED)██░░██──██░░██──$(GREEN)██░░██──██░░██──$(RED)██░░██──██░░██──██░░██──$(GREEN)──██░░██───\n"
+	@printf "$(GREEN)\t ─██░░██████████──$(RED)██░░██████░░██──$(GREEN)██░░██──██░░██──$(RED)██░░██──██░░██──$(GREEN)██░░██──██░░██──$(RED)██░░██──██████──██░░██──$(GREEN)──██░░██───\n"
+	@printf "$(GREEN)\t ─██░░██──────────$(RED)██░░██──██░░██──$(GREEN)██░░██──██░░██──$(RED)██░░██──██░░██──$(GREEN)██░░██──██░░██──$(RED)██░░██──────────██░░██──$(GREEN)──██░░██───\n"
+	@printf "$(GREEN)\t ─██░░██████████──$(RED)██░░██──██░░██──$(GREEN)██░░██████░░██──$(RED)██░░██████░░██──$(GREEN)██░░██████░░██──$(RED)██░░██──────────██░░██──$(GREEN)████░░████─\n"
+	@printf "$(GREEN)\t ─██░░░░░░░░░░██──$(RED)██░░██──██░░██──$(GREEN)██░░░░░░░░░░██──$(RED)██░░░░░░░░░░██──$(GREEN)██░░░░░░░░░░██──$(RED)██░░██──────────██░░██──$(GREEN)██░░░░░░██─\n"
+	@printf "$(GREEN)\t ─██████████████──$(RED)██████──██████──$(GREEN)██████████████──$(RED)██████████████──$(GREEN)██████████████──$(RED)██████──────────██████──$(GREEN)██████████─\n"
+	@printf "$(GREEN)\t ─────────────────$(RED)────────────────$(GREEN)────────────────$(RED)────────────────$(GREEN)────────────────$(RED)────────────────────────$(GREEN)───────────\n\n\n\n"
+	
+	@printf "\n\t\t\t\t\t\t      $(RED)$(BONUS) $(GREEN) 𝘾 𝙍 𝙀 𝘼 𝙏 𝙀 𝘿  ✅ \n"
 
 
+$(PATH_OBJ_BNS)%.o:%.c
+	@mkdir -p $(PATH_OBJ_BNS)
+	@cc -c $< -o $@
+	@printf "\t\t$(SILVER)[$(PURPLE)Object file of $(WHITE)$< $(BLUE)  ======>  $(WHITE)$(PATH_OBJ_BNS)$(notdir $@)   $(RED)>>>>$(GREEN)🅳 🅾 🅽 🅴 $(RED)<<<<$(SILVER)] $(GREEN)         🅲  🆁  🅴  🅰  🆃  🅴  🅳\n\n" 
 
-NAME = philo_bonus
-INC = philosophers_bonus.h
-FLAGS = -Wall -Wextra -Werror
-SRC =	check_death.c \
-		initial_sems_bonus.c \
-		sleep_currtime_bonus.c \
-		routine_bonus.c \
-		philosophers_bonus.c \
-		philo_utils.c \
-		parsing_bonus.c 
-OBJ = $(SRC:%.c=%.o)
 
-all: $(NAME)
-$(NAME) : $(OBJ) $(INC)
-	gcc $(FLAGS) $(OBJ) -o $(NAME)
 clean:
-	@rm -f $(OBJ)
+	@rm -rf $(PATH_OBJ_BNS)
+	
+	@printf "$(RED)\t ─────────────────$(GREEN)────────────────$(RED)────────────────$(GREEN)────────────────$(RED)────────────────$(GREEN)────────────────────────$(RED)───────────\n"
+	@printf "$(RED)\t ─██████████████──$(GREEN)██████████████──$(RED)██████████████──$(GREEN)██████████████──$(RED)██████──██████──$(GREEN)██████──────────██████──$(RED)██████████─\n"
+	@printf "$(RED)\t ─██░░░░░░░░░░██──$(GREEN)██░░░░░░░░░░██──$(RED)██░░░░░░░░░░██──$(GREEN)██░░░░░░░░░░██──$(RED)██░░██──██░░██──$(GREEN)██░░██████████████░░██──$(RED)██░░░░░░██─\n"
+	@printf "$(RED)\t ─██░░██████████──$(GREEN)██░░██████░░██──$(RED)██░░██████████──$(GREEN)██░░██████░░██──$(RED)██░░██──██░░██──$(GREEN)██░░░░░░░░░░░░░░░░░░██──$(RED)████░░████─\n"
+	@printf "$(RED)\t ─██░░██──────────$(GREEN)██░░██──██░░██──$(RED)██░░██──────────$(GREEN)██░░██──██░░██──$(RED)██░░██──██░░██──$(GREEN)██░░██████░░██████░░██──$(RED)──██░░██───\n"
+	@printf "$(RED)\t ─██░░██████████──$(GREEN)██░░██████░░██──$(RED)██░░██──────────$(GREEN)██░░██──██░░██──$(RED)██░░██──██░░██──$(GREEN)██░░██──██░░██──██░░██──$(RED)──██░░██───\n"
+	@printf "$(RED)\t ─██░░░░░░░░░░██──$(GREEN)██░░░░░░░░░░██──$(RED)██░░██──██████──$(GREEN)██░░██──██░░██──$(RED)██░░██──██░░██──$(GREEN)██░░██──██░░██──██░░██──$(RED)──██░░██───\n"
+	@printf "$(RED)\t ─██░░██████████──$(GREEN)██░░██████░░██──$(RED)██░░██──██░░██──$(GREEN)██░░██──██░░██──$(RED)██░░██──██░░██──$(GREEN)██░░██──██████──██░░██──$(RED)──██░░██───\n"
+	@printf "$(RED)\t ─██░░██──────────$(GREEN)██░░██──██░░██──$(RED)██░░██──██░░██──$(GREEN)██░░██──██░░██──$(RED)██░░██──██░░██──$(GREEN)██░░██──────────██░░██──$(RED)──██░░██───\n"
+	@printf "$(RED)\t ─██░░██████████──$(GREEN)██░░██──██░░██──$(RED)██░░██████░░██──$(GREEN)██░░██████░░██──$(RED)██░░██████░░██──$(GREEN)██░░██──────────██░░██──$(RED)████░░████─\n"
+	@printf "$(RED)\t ─██░░░░░░░░░░██──$(GREEN)██░░██──██░░██──$(RED)██░░░░░░░░░░██──$(GREEN)██░░░░░░░░░░██──$(RED)██░░░░░░░░░░██──$(GREEN)██░░██──────────██░░██──$(RED)██░░░░░░██─\n"
+	@printf "$(RED)\t ─██████████████──$(GREEN)██████──██████──$(RED)██████████████──$(GREEN)██████████████──$(RED)██████████████──$(GREEN)██████──────────██████──$(RED)██████████─\n"
+	@printf "$(RED)\t ─────────────────$(GREEN)────────────────$(RED)────────────────$(GREEN)────────────────$(RED)────────────────$(GREEN)────────────────────────$(RED)───────────\n\n\n\n"
+	
+	@printf "\n\t$(BLUE)|🤧 - 🤧 - 🤧 - 🤧 - 🤧 - 🤧|\t$(RED)𝘾 𝙇 𝙀 𝘼 𝙉 𝙄 𝙉 𝙂   𝘼 𝙍 𝙀   𝘾 𝙊 𝙈 𝙋 𝙇 𝙀 𝙏 𝙀 𝘿\t$(YELLOW)|✅ - ✅ - ✅ - ✅ - ✅ - ✅|\n\n"
+
 fclean: clean
-	@rm -f $(NAME)
-re: fclean all
+	@rm -f $(BONUS)
+	@printf "\n\t$(YELLOW)|🚮 - 🚮 - 🚮 - 🚮 - 🚮 - 🚮|\t$(RED)𝙁 𝙊 𝙍 𝘾 𝙀   𝘾 𝙇 𝙀 𝘼 𝙉 𝙄 𝙉 𝙂   𝘼 𝙍 𝙀   𝘾 𝙊 𝙈 𝙋 𝙇 𝙀 𝙏 𝙀 𝘿    $(BLUE)|✅ - ✅ - ✅ - ✅ - ✅ - ✅|\n\n"; \
+
+
+re: fclean all 
+	@printf "\n\t\t\t$(YELLOW)               ==$(GREEN)---------------------------------------------------$(YELLOW)== $(BLUE)\n"
+	@printf "\t\t\t$(YELLOW)               ||$(GREEN)---------------------------------------------------$(YELLOW)||\n"
+	@printf "\t\t\t$(YELLOW)               ||$(GREEN) 𝙍 𝙀 - 𝙈 𝘼 𝙆 𝙄 𝙉 𝙂   𝘼 𝙍 𝙀   𝘾 𝙊 𝙈 𝙋 𝙇 𝙀 𝙏 𝙀 𝘿   ✅$(YELLOW)||\n"
+	@printf "\t\t\t$(YELLOW)               ||$(GREEN) 𝙍 𝙀 - 𝙈 𝘼 𝙆 𝙄 𝙉 𝙂   𝘼 𝙍 𝙀   𝘾 𝙊 𝙈 𝙋 𝙇 𝙀 𝙏 𝙀 𝘿   ✅$(YELLOW)||\n"
+	@printf "\t\t\t$(YELLOW)               ||$(GREEN) 𝙍 𝙀 - 𝙈 𝘼 𝙆 𝙄 𝙉 𝙂   𝘼 𝙍 𝙀   𝘾 𝙊 𝙈 𝙋 𝙇 𝙀 𝙏 𝙀 𝘿   ✅$(YELLOW)||"
+	@printf "\n\t\t\t$(YELLOW)               ||$(GREEN)---------------------------------------------------$(YELLOW)||\n"
+	@printf "\t\t\t$(YELLOW)               ==$(GREEN)---------------------------------------------------$(YELLOW)== $(BLUE)\n\n\n\n"
+
+
+.PHONY: all clean fclean re 
