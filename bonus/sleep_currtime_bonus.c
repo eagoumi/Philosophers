@@ -1,4 +1,4 @@
-#include "philosophers.h"
+#include "philosophers_bonus.h"
 
 long    current_time(void)
 {
@@ -6,7 +6,6 @@ long    current_time(void)
     long    milli_time;
 
     gettimeofday(&gettime, NULL);
-
     /*convert Microseconds to Milliseconds*/
     milli_time = (gettime.tv_sec * 1000) + (gettime.tv_usec / 1000);
     return (milli_time);
@@ -22,7 +21,7 @@ void    mine_sleep(long time)
 
     while (the_passed_time > begin_time)
     {
-        usleep(500);
+        usleep(200);
         begin_time = current_time();
     }
 }

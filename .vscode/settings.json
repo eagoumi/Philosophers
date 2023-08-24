@@ -1,17 +1,5 @@
 {
     "files.associations": {
-        "array": "c",
-        "iterator": "c",
-        "string": "c",
-        "string_view": "c",
-        "vector": "c",
-        "pthread.h": "c",
-        "time.h": "c",
-        "__functional_base": "c",
-        "istream": "c",
-        "locale": "c",
-        "memory": "c",
-        "tuple": "c",
-        "utility": "c"
+        "philosophers_bonus.h": "c"
     }
 }

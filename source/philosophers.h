@@ -32,6 +32,7 @@ typedef struct philoinfo_s
 	int		time_to_eat;
 	int		time_to_sleep;
 	int		is_dead;
+	int		are_dead;
 
 }	t_info;
 
@@ -39,7 +40,6 @@ typedef struct philo_s
 {
 	int				philo_id;
 	int				eaten_time;
-	int				are_dead;
 	long			dernier_repas;
 	t_mtx			*mtx;
     pthread_t		threads;
