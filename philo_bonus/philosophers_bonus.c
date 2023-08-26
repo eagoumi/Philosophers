@@ -14,29 +14,27 @@
 
 int	ft_atoi(const char *str)
 {
-	int	i;
-	int	x;
-	int	signe;
+	int		i;
+	long	x;
 
-	signe = 1;
 	i = 0;
-	while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\r'
-			|| str[i] == '\v' || str[i] == '\n' || str[i] == '\f'))
-		i++;
-	if (str[i] == '-')
-	{
-		signe = signe * -1;
-		i++;
-	}
-	else if (str[i] == '+')
-		i++;
 	x = 0;
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
+		if (x >= INT_MAX)
+		{
+			write(2, "too high VALUE\n", 15);
+			exit (1);
+		}
 		x = (x * 10) + (str[i] - 48);
 		i++;
 	}
-	return (signe * x);
+	if (x >= INT_MAX)
+	{
+		write(2, "too high VALUE\n", 15);
+		exit (1);
+	}
+	return (x);
 }
 
 void	norm(t_alldata get_data, char **argv)
@@ -66,9 +64,8 @@ int	main(int argc, char **argv)
 	if (argc == 6)
 		get_data.info->number_ropas = ft_atoi(argv[5]);
 	if (initial_semaphore(&get_data))
-		return (0);
-	if (initial_philo(&get_data))
-		return (0);
+		return (1);
+	initial_philo(&get_data);
 	if (initial_pross(&get_data))
 		return (0);
 	my_free_sem(&get_data);

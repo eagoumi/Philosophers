@@ -10,6 +10,8 @@ FILES_BNS=	check_death.c \
 			sleep_currtime_bonus.c \
 			routine_bonus.c \
 			philosophers_bonus.c \
+			protection.c \
+			protection2.c \
 			philo_utils.c \
 			parsing_bonus.c 
 

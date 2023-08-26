@@ -28,15 +28,15 @@ int	parsing(char **av)
 		j = 0;
 		if (!(av[i][0]))
 		{
-			printf("Parsing ERROR an argument start with '\\0'\n");
-			return (1);
+			write(2, "Parsing ERROR an argument start with '\\0'\n", 42);
+			exit (1);
 		}
 		while (av[i][j])
 		{
 			if (!ft_isdigit(av[i][j]))
 			{
-				printf("Parsing_Bonus ERROR\n");
-				return (1);
+				write(2, "Parsing_Bonus ERROR\n", 20);
+				exit (1);
 			}
 			j++;
 		}

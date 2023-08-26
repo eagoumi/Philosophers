@@ -26,6 +26,7 @@
 typedef struct semaphore_s
 {
 	sem_t	*forks;
+	sem_t	*mutex;
 	sem_t	*out_put;
 }	t_semaphore;
 
@@ -58,6 +59,14 @@ typedef struct alldata_s
 }	t_alldata;
 
 void	*check_if_death(void *check);
+void 	*ft_malloc(size_t size);
+int		ft_pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg);
+int 	ft_sem_close(sem_t *sem);
+int 	ft_sem_wait(sem_t *sem);
+int 	ft_sem_post(sem_t *sem);
+int 	ft_kill(pid_t pid, int sig);
+int 	ft_gettimeofday(struct timeval *restrict tp, void *restrict tzp);
+int 	ft_pthread_join(pthread_t thread, void **value_ptr);
 void	mine_sleep(long time);
 long	current_time(void);
 void	wait_for_loop(t_alldata *alldata);
