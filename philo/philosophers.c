@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 16:09:17 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/08/24 22:57:03 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/08/26 16:55:09 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,27 @@
 
 int	ft_atoi(const char *str)
 {
-	int	i;
-	int	x;
-	int	signe;
+	int		i;
+	long	x;
 
-	signe = 1;
 	i = 0;
-	while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\r'
-			|| str[i] == '\v' || str[i] == '\n' || str[i] == '\f'))
-		i++;
-	if (str[i] == '-')
-	{
-		signe = signe * -1;
-		i++;
-	}
-	else if (str[i] == '+')
-		i++;
 	x = 0;
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
+		if (x >= INT_MAX)
+		{
+			write(2, "too high VALUE\n", 15);
+			exit (1);
+		}
 		x = (x * 10) + (str[i] - 48);
 		i++;
 	}
-	return (signe * x);
+	if (x >= INT_MAX)
+	{
+		write(2, "too high VALUE\n", 15);
+		exit (1);
+	}
+	return (x);
 }
 
 int	main(int ac, char **av)

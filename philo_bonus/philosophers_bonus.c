@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 15:52:00 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/08/24 22:58:59 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/08/26 16:00:54 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,7 @@ int	main(int argc, char **argv)
 	if (initial_pross(&get_data))
 		return (0);
 	my_free_sem(&get_data);
+	free(get_data.key);
+	free(get_data.philo->pid);
+	free(get_data.philo);
 }

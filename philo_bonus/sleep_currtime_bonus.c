@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 16:11:01 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/08/24 16:11:54 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/08/26 16:24:06 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	mine_sleep(long time)
 	the_passed_time = current_time() + time;
 	while (the_passed_time > begin_time)
 	{
-		usleep(100);
+		usleep(500);
 		begin_time = current_time();
 	}
 }

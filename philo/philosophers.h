@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 10:42:03 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/08/24 18:22:01 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/08/26 16:44:37 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct alldata_s
 int		parsing(char **av);
 int		if_dead(t_philo *philo);
 int		check_if_dead(t_alldata *allinfo);
+void	*ft_malloc(size_t size);
 int		create_philo(t_alldata *get_philo, int j, int i);
 int		final_philo(t_alldata *get_philo);
 void	grab_fork_left(t_philo *philos);

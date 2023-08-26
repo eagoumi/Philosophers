@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 15:50:20 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/08/24 18:42:45 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/08/26 15:57:40 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	initial_philo(t_alldata *getinfo)
 
 	i = 0;
 	getinfo->philo = ft_malloc(sizeof(t_philo) * getinfo->info->number_philos);
-	getinfo->philo->pid = ft_malloc(sizeof(pid_t) * getinfo->info->number_philos);
+	getinfo->philo->pid = ft_malloc(sizeof(pid_t) * 
+			getinfo->info->number_philos);
 	getinfo->info->is_dead = 0;
 	getinfo->philo->eaten_time = getinfo->info->number_ropas;
 	getinfo->philo->args = getinfo->info;
@@ -47,7 +48,4 @@ void	my_free_sem(t_alldata *alldata)
 	sem_unlink("forks");
 	sem_close(alldata->key->out_put);
 	sem_close(alldata->key->forks);
-	free(alldata->key);
-	free(alldata->philo->pid);
-	free(alldata->philo);
 }

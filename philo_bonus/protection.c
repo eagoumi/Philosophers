@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   protection.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/26 14:36:04 by eagoumi           #+#    #+#             */
+/*   Updated: 2023/08/26 14:36:53 by eagoumi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers_bonus.h"
 
-void *ft_malloc(size_t size)
+void	*ft_malloc(size_t size)
 {
-	void *ptr;
+	void	*ptr;
 
 	ptr = malloc(size);
 	if (!ptr)
@@ -13,42 +25,42 @@ void *ft_malloc(size_t size)
 	return (ptr);
 }
 
-int ft_pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg)
+int	ft_pthread_create(pthread_t *thread, const pthread_attr_t *attr, 
+	void *(*start_routine)(void *), void *arg)
 {
-    int ret;
+	int	ret;
 
-    ret = pthread_create(thread, attr, start_routine, arg);
-    if (ret != 0)
-    {
-        write(2, "pthread_create error!\n", 22);
-        exit (1);
-    }
-    return(ret);
+	ret = pthread_create(thread, attr, start_routine, arg);
+	if (ret != 0)
+	{
+		write(2, "pthread_create error!\n", 22);
+		exit (1);
+	}
+	return (ret);
 }
 
-
-int ft_sem_wait(sem_t *sem)
+int	ft_sem_wait(sem_t *sem)
 {
-    int semw;
+	int	semw;
 
-    semw = sem_wait(sem);
-    if (semw != 0)
-    {
-        write(2, "sem_wait error!\n", 16);
-        exit (1);
-    }
-    return (semw);
+	semw = sem_wait(sem);
+	if (semw != 0)
+	{
+		write(2, "sem_wait error!\n", 16);
+		exit (1);
+	}
+	return (semw);
 }
 
-int ft_sem_post(sem_t *sem)
+int	ft_sem_post(sem_t *sem)
 {
-    int semp;
+	int	semp;
 
-    semp = sem_post(sem);
-    if (semp != 0)
-    {
-        write(2, "sem_post error!\n", 16);
-        exit (1);
-    }
-    return (semp);
+	semp = sem_post(sem);
+	if (semp != 0)
+	{
+		write(2, "sem_post error!\n", 16);
+		exit (1);
+	}
+	return (semp);
 }

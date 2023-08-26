@@ -11,6 +11,7 @@ FILES_SRC=	check_if_dead.c \
 			initial_mutex.c \
 			initial_philo.c \
 			minesleep_current_tm.c \
+			protection_philo.c \
 			parsing.c \
 			routine.c \
 			philosophers.c 

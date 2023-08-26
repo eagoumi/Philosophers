@@ -6,7 +6,7 @@
 /*   By: eagoumi <eagoumi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 10:43:36 by eagoumi           #+#    #+#             */
-/*   Updated: 2023/08/24 15:53:37 by eagoumi          ###   ########.fr       */
+/*   Updated: 2023/08/26 14:37:27 by eagoumi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,15 @@ typedef struct alldata_s
 }	t_alldata;
 
 void	*check_if_death(void *check);
-void 	*ft_malloc(size_t size);
-int		ft_pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg);
-int 	ft_sem_close(sem_t *sem);
-int 	ft_sem_wait(sem_t *sem);
-int 	ft_sem_post(sem_t *sem);
-int 	ft_kill(pid_t pid, int sig);
-int 	ft_gettimeofday(struct timeval *restrict tp, void *restrict tzp);
-int 	ft_pthread_join(pthread_t thread, void **value_ptr);
+void	*ft_malloc(size_t size);
+int		ft_pthread_create(pthread_t *thread, const pthread_attr_t *attr, 
+			void *(*start_routine)(void *), void *arg);
+int		ft_sem_close(sem_t *sem);
+int		ft_sem_wait(sem_t *sem);
+int		ft_sem_post(sem_t *sem);
+int		ft_kill(pid_t pid, int sig);
+int		ft_gettimeofday(struct timeval *restrict tp, void *restrict tzp);
+int		ft_pthread_join(pthread_t thread, void **value_ptr);
 void	mine_sleep(long time);
 long	current_time(void);
 void	wait_for_loop(t_alldata *alldata);
